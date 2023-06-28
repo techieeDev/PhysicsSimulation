@@ -4,7 +4,7 @@ public class Cycle
 {
     private Stopwatch timer;
     public double deltaTime;
-
+    
     public void Start()
     {
         timer = new Stopwatch();    

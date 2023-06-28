@@ -2,6 +2,7 @@
 {
     public partial class Object
     {
-        private double[] LocalPosition = new double[2];
+        public CartesianVector LocalPosition = CartesianVector.Instantiate(1f, 1f);
+        public Angle LocalRotation = Angle.Instantiate(0f);
     }
 }

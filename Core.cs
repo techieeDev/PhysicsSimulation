@@ -1,10 +1,13 @@
 ﻿using static System.Console;
+using AnalyticGeometry;
 
 namespace Physics
 {
-    public partial class Object
-    {
+    public partial class Object{
         public Mass Mass = new Mass();
+        public CartesianVector Velocity = CartesianVector.Instantiate(0.1f, 0.1f);
+        public Characteristic Torque = Characteristic.Instantiate(0.1f);
+        public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
     }
 
     public class Plane : Object
@@ -26,21 +29,7 @@ namespace Physics
         public GravitationalForce GravitationalForce = new GravitationalForce();
     }
 
-    public struct Point
-    {
-        public double x;
-        public double y;
-        public void Set(double _x, double _y){
-            x = _x;
-            y = _y;
-        }
 
-        public double[] Get(){
-            return new double[] {
-                    x, y
-                };
-        }
-    }
 
 
     public class Axis{
@@ -52,8 +41,8 @@ namespace Physics
         }
     }
 
-    public class CoordinateSystem
-    {
+    public class CoordinateSystem{
+
         public Axis XAxis = new Axis();
         public Axis YAxis = new Axis();
 
@@ -93,6 +82,12 @@ namespace Physics
     public class Characteristic{
         public double Value { get; set; }
 
+        public static Characteristic Instantiate(double Value) { 
+            Characteristic characteristic = new Characteristic();
+            characteristic.Value = Value;
+            return characteristic;
+        }
+
         public virtual void SetValue(double value){
             Value = Math.Abs(value);
         }
@@ -110,7 +105,7 @@ namespace Physics
 
             vector.XValue = x;
             vector.YValue = y;
-
+            
             return vector;
         }
 
@@ -127,6 +122,10 @@ namespace Physics
         public virtual double GetMagnitude(){
             double magnitude = Math.Sqrt(Math.Pow(XValue, 2) + Math.Pow(YValue, 2));
             return magnitude;
+        }
+
+        public virtual void DisplayComponenets(){
+            WriteLine("X: " + XValue.ToString() + " Y: " + YValue.ToString()); 
         }
     }
 
@@ -162,13 +161,17 @@ namespace Physics
 
     public class Length : Characteristic { }
 
-    public class Angle : Characteristic{
+    public class Angle{
         public double Radians;
+        public double Degrees;
 
-        public override void SetValue(double value){
-            Value = value;
-            Value = Math.Clamp(Value, 0, 360);
-            Radians = Trigonometric.ConvertToRadians(Value);
+        public static Angle Instantiate(double degrees){
+            Angle theta = new Angle();
+            
+            theta.Degrees = degrees;
+            theta.Radians = Trigonometric.ConvertToRadians(degrees);
+
+            return theta;
         }
 
         public double GetSin(){
@@ -192,6 +195,10 @@ namespace Physics
     {
         public static double ConvertToRadians(double degrees){
             return (degrees * Math.PI ) / 180;
+        }
+
+        public static double ConvertToDegrees(double radians) { 
+            return (radians * 180) / Math.PI;
         }
 
         public static double Cotangent(double x){
