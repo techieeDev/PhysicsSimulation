@@ -3,6 +3,7 @@ using System;
 using static System.Math;
 using static System.Console;
 using AnalyticGeometry;
+using static Calculus.Derivation;
 
 class App
 {
@@ -13,6 +14,7 @@ class App
 
     private static double ForceAngle = 0;
 
+    //Thread thread1 = new Thread(new ThreadStart(ContinuosAngleVariation));
     static void ContinuosAngleVariation()
     {
         while (true)
@@ -27,32 +29,36 @@ class App
         }
     }
 
-    static void Main(string[] args)
+    static void Simulate()
     {
-        //Thread thread1 = new Thread(new ThreadStart(ContinuosAngleVariation));
-
-        mainloop = new Cycle();
-
-        mainloop.Start();
-        //thread1.Start();
-
         Physics.Object square = new Physics.Object();
         square.Mass.Value = 1.7;
 
-        Physics.CartesianForce N = CartesianForce.Instantiate(3.72f, 3 * Exp(-3));
         Physics.AbsoluteForce F = AbsoluteForce.Instantiate(0.01);
-        Point initial = Point.Instantiate(2, 4);
         Angle theta = Angle.Instantiate(15);
+
+        if (mainloop.deltaTime > _timerf)
+        {
+            square.AddTranslationForce(F, theta);
+            WriteLine();
+            square.LocalPosition.DisplayComponenets();
+            _timerf = mainloop.deltaTime + 1;
+        }
+    }
+
+    static void Main(string[] args)
+    {
+        mainloop = new Cycle();
+        mainloop.Start();
+
+        DifferentiableQuadratic F = DifferentiableQuadratic.Instantiate(2, -4, 1);
+        DifferentiableQuadratic dF = Differentiate(F);
+        dF.DisplayForm();   
+
+
+        // Physics simulation
         while (true){
             mainloop.Update();
-
-            if (mainloop.deltaTime > _timerf) {
-                square.AddTranslationForce(F, theta);
-                WriteLine();
-                square.LocalPosition.DisplayComponenets();
-                _timerf = mainloop.deltaTime + 1;
-            }
-            
         }
 
     }
