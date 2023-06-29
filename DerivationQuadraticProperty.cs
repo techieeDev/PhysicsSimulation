@@ -38,7 +38,7 @@
                 }
   
 
-                Console.WriteLine(Abs(xpow2coefficient).ToString() + "x" + exponent + " " + Algebra.DetermineSign(xpow1coefficient) + " " + Abs(xpow1coefficient).ToString() + "x" + " " + Algebra.DetermineSign(constant) + " " + c); ;
+                Console.WriteLine(Abs(xpow2coefficient).ToString() + "x" + exponent + " " + Algebra.DetermineSign(xpow1coefficient) + " " + Abs(xpow1coefficient).ToString() + "x" + " " + Algebra.DetermineSign(constant) + " " + c);
             }
         }
 
