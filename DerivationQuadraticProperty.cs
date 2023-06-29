@@ -30,15 +30,17 @@
             public override void DisplayForm()
             {
                 string c = string.Empty;
+                string b = Abs(xpow1coefficient).ToString();
                 string exponent = "";
 
                 if(constant != 0) {
                     c = Abs(constant).ToString();
                     exponent = "^2";
+                    b += "x";
                 }
   
 
-                Console.WriteLine(Abs(xpow2coefficient).ToString() + "x" + exponent + " " + Algebra.DetermineSign(xpow1coefficient) + " " + Abs(xpow1coefficient).ToString() + "x" + " " + Algebra.DetermineSign(constant) + " " + c);
+                Console.WriteLine(Abs(xpow2coefficient).ToString() + "x" + exponent + " " + Algebra.DetermineSign(xpow1coefficient) + " " + b + " " + Algebra.DetermineSign(constant) + " " + c);
             }
         }
 
