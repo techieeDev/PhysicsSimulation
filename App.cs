@@ -2,7 +2,6 @@
 using System;
 using static System.Math;
 using static System.Console;
-using AnalyticGeometry;
 using static Calculus.Derivation;
 
 class App

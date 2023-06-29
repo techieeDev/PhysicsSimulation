@@ -1,5 +1,4 @@
 ﻿using static System.Console;
-using AnalyticGeometry;
 
 namespace Physics
 {

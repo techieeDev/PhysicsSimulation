@@ -1,22 +1,8 @@
 ﻿using Physics;
 using static System.Math;
 
-namespace AnalyticGeometry
+public static class AnalyticGeometry
 {
-    public static class CartesianLine
-    {
-        public static double CalculateSlope(CartesianVector vector, Point initial){
-            // Point management
-            double[] components = vector.GetComponents();
-            double finalX = components[0];
-            double finalY = components[1];
-
-            // Find slope
-            double constant = finalY * initial.x - initial.y * finalX;
-            double slope = (initial.y + constant) / initial.y;
-
-            return slope;
-        }
 
         public static double CalculateMagnitude(Point point2, Point point1){
             double componentX = point2.x - point1.x;
@@ -65,5 +51,4 @@ namespace AnalyticGeometry
                     x, y
                 };
         }
-    }
 }

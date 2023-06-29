@@ -3,7 +3,6 @@
 
 namespace Physics
 {
-    using AnalyticGeometry;
     public partial class Object
     {
         public void AddTranslationForce(IForce force){
@@ -76,7 +75,7 @@ namespace Physics
 
         public double CalculateLeverArmDistance(Point initialPoint)
         {
-            Point finalPoint = CartesianLine.CalculateFinalPoint(LocalPosition, initialPoint);
+            Point finalPoint = AnalyticGeometry.CalculateFinalPoint(LocalPosition, initialPoint);
 
             double perpendicularX = LocalPosition.XValue - finalPoint.x;
             double perpendicularY = LocalPosition.YValue - finalPoint.y;
