@@ -4,30 +4,38 @@ namespace Physics
 {
     public partial class Spring
     {
-        public void AddPerpendicularForce(IForce force)
+        private double CalculateExtension(double forceMagnitude){
+            return forceMagnitude / StiffnessConstant.Value;
+        }
+
+        private void UpdateSpringLength(double deltaExt, double deltaTime) {
+            Length.Value += deltaExt * deltaTime;
+            Length.Value = Clamp(Length.Value, 0, ExtensionLimit.Value);
+        }
+
+        public void AddPerpendicularForce(IForce force, double deltaTime)
         {
             // Force magnitude
             double forceMagnitude = force.GetComponents()[1];
 
             // Calculate extension
-            double deltaExtension = forceMagnitude / StiffnessConstant.Value;
+            double deltaExtension = CalculateExtension(forceMagnitude);
 
             // Update spring length
-            Length.Value += deltaExtension;
-            Length.Value = Clamp(Length.Value, 0, ExtensionLimit.Value);
+            UpdateSpringLength(deltaExtension, deltaTime);
         }
 
-        public void AddPerpendicularForce(AbsoluteForce force){
-
+        public void AddPerpendicularForce(AbsoluteForce force, double deltaTime)
+        {
             // Force magnitude
-            double forceMagntiude = force.Value;
+            double forceMagnitude = force.Value;
 
             // Calculate extension
-            double deltaExtension = forceMagntiude / StiffnessConstant.Value;
+            double deltaExtension = CalculateExtension(forceMagnitude);
 
             // Update spring length
-            Length.Value += deltaExtension;
-            Length.Value = Clamp(Length.Value, 0, ExtensionLimit.Value);
+            UpdateSpringLength(deltaExtension, deltaTime);
+
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Data.SqlTypes;
-using static System.Console;
+﻿using static System.Console;
 
 namespace Physics
 {
@@ -12,9 +11,9 @@ namespace Physics
 
     public partial class Spring
     {
-        protected Characteristic Length = Characteristic.Instantiate(1);
+        public Characteristic Length = Characteristic.Instantiate(1);
         protected Characteristic StiffnessConstant = new Characteristic();
-        protected Characteristic ExtensionLimit = new Characteristic();
+        public Characteristic ExtensionLimit = new Characteristic();
 
         public static Spring Instantiate(double length, double stiffnessConstant, double extLimit){
             Spring spring = new Spring();

@@ -2,12 +2,11 @@
 
 public class Cycle
 {
-    private Stopwatch timer;
+    protected Stopwatch timer = new Stopwatch();
     public double deltaTime;
     
     public void Start()
     {
-        timer = new Stopwatch();    
         timer.Start();
     }
 
@@ -17,5 +16,7 @@ public class Cycle
         deltaTime = elapsedSeconds - deltaTime;
 
         deltaTime = elapsedSeconds;
+
+        Thread.Sleep(16);
     }
 }
