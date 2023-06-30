@@ -1,4 +1,5 @@
-﻿using static System.Console;
+﻿using System.Data.SqlTypes;
+using static System.Console;
 
 namespace Physics
 {
@@ -7,6 +8,22 @@ namespace Physics
         public CartesianVector Velocity = CartesianVector.Instantiate(0.1f, 0.1f);
         public Characteristic Torque = Characteristic.Instantiate(0.1f);
         public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
+    }
+
+    public partial class Spring
+    {
+        protected Characteristic Length = Characteristic.Instantiate(1);
+        protected Characteristic StiffnessConstant = new Characteristic();
+        protected Characteristic ExtensionLimit = new Characteristic();
+
+        public static Spring Instantiate(double length, double stiffnessConstant, double extLimit){
+            Spring spring = new Spring();
+            spring.Length.Value = length;
+            spring.StiffnessConstant.Value = stiffnessConstant;
+            spring.ExtensionLimit.Value = extLimit;
+
+            return spring;
+        }      
     }
 
     public class Plane : Object
@@ -92,7 +109,14 @@ namespace Physics
         }
     }
     public class ReferCharacteristic{
-        public double Value { get; }
+        public double Value { get; private set; }
+
+        public static ReferCharacteristic Instantiate(double Value)
+        {
+            ReferCharacteristic characteristic = new ReferCharacteristic();
+            characteristic.Value = Value;
+            return characteristic;
+        }
     }
 
     public class CartesianVector {

@@ -45,6 +45,16 @@ class App
         }
     }
 
+    static void SimulateSpring(Spring spring, CartesianForce force)
+    {
+        if(mainloop.deltaTime > _timerf)
+        {
+            spring.AddPerpendicularForce(force);
+            WriteLine(spring.Length.Value + "m");
+            _timerf = mainloop.deltaTime + 1;
+        }
+    }
+
     static void Main(string[] args)
     {
         mainloop = new Cycle();
@@ -52,12 +62,16 @@ class App
 
         DifferentiableQuadratic F = DifferentiableQuadratic.Instantiate(2, -4, 1);
         DifferentiableQuadratic dF = Differentiate(F);
-        dF.DisplayForm();   
+        dF.DisplayForm();
 
+        Spring spring = Spring.Instantiate(8, 4.25f, 21);
+        CartesianForce pull = CartesianForce.Instantiate(0, 12);
 
         // Physics simulation
         while (true){
             mainloop.Update();
+            SimulateSpring(spring, pull);
+
         }
 
     }
