@@ -2,7 +2,6 @@
 
 namespace Calculus
 {
-
     public static partial class Derivation
     {
         public static DifferentiableBasic Differentiate(DifferentiableBasic df)

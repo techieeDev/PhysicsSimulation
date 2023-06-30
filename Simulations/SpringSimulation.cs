@@ -11,6 +11,6 @@ public class SpringSimulation : PhysicBehaviour
         main.Update();
         spring.AddPerpendicularForce(force, main.deltaTime);
         if(spring.Length.Value != spring.ExtensionLimit.Value)
-            WriteLine(ID.ToString() + ": " + spring.Length.Value.ToString() + "m");
+            WriteLine(ID.ToString() + ": " + Math.Round(spring.Length.Value, 3).ToString() + "m");
     }
 }

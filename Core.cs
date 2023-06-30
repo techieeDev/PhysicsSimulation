@@ -20,7 +20,7 @@ namespace Physics
             spring.Length.Value = length;
             spring.StiffnessConstant.Value = stiffnessConstant;
             spring.ExtensionLimit.Value = extLimit;
-
+            
             return spring;
         }      
     }
