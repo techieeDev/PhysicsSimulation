@@ -5,7 +5,8 @@
         public double GetMagnitude();
     }
 
-    public class CartesianForce : CartesianVector, IForce {
+    public class CartesianForce : CartesianVector, IForce
+    {
         public static new CartesianForce Instantiate(double x, double y){
             CartesianForce force = new CartesianForce();
 

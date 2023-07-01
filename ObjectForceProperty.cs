@@ -5,29 +5,25 @@ namespace Physics
 {
     public partial class Object
     {
-        public void AddTranslationForce(IForce force){
+        public void AddTranslationForce(IForce force, double deltaTime){
             double[] components = force.GetComponents();
              
             // Calculate acceleration
-            double accelerationX = components[0] / Mass.Value;
-            double accelerationY = components[1] / Mass.Value;
+            CartesianVector acceleration = CalculateAcceleration(components[0], components[1]);
 
-            // Update velocity
-            double deltaSeconds = App.mainloop.deltaTime;
+            // Calculate velocity
+            CartesianVector velocity = CalculateVelocity(deltaTime);
 
-            double velocityX = Velocity.XValue + (accelerationX * deltaSeconds);
-            double velocityY = Velocity.YValue + (accelerationY * deltaSeconds);
+            // Calculate position
+            CartesianVector position = CalculatePosition(deltaTime);
 
-            // Update position
-            double positionX = LocalPosition.XValue + (Velocity.XValue * deltaSeconds);
-            double positionY = LocalPosition.YValue + (Velocity.YValue * deltaSeconds);
-
-            // Update the object's position and velocity
-            LocalPosition = CartesianVector.Instantiate(positionX, positionY);
-            Velocity = CartesianVector.Instantiate(velocityX, velocityY);
+            // Update the object's position, velocity, acceleration
+            LocalPosition = position;
+            Velocity = velocity;
+            Acceleration = acceleration;
         }
 
-        public void AddTranslationForce(AbsoluteForce absoluteForce, Angle angle){
+        public void AddTranslationForce(AbsoluteForce absoluteForce, Angle angle, double deltaTime){
             double radians = angle.Radians;
             
             // Force components
@@ -50,44 +46,21 @@ namespace Physics
             
 
             // Calculate acceleration
-            double accelerationX = forceX / Mass.Value;
-            double accelerationY = forceY / Mass.Value;
+            CartesianVector acceleration = CalculateAcceleration(forceX, forceY);
 
-            // Update velocity
-            double deltaSeconds = App.mainloop.deltaTime;
-            
-            double velocityX = Velocity.XValue + (accelerationX * deltaSeconds); 
-            double velocityY = Velocity.YValue + (accelerationY * deltaSeconds);
+            // Calculate velocity            
+            CartesianVector velocity = CalculateVelocity(deltaTime);
 
-            // Update position
-            double positionX = LocalPosition.XValue + (Velocity.XValue * deltaSeconds);
-            double positionY = LocalPosition.YValue + (Velocity.YValue * deltaSeconds);
+            // Calculate position
+            CartesianVector position = CalculatePosition(deltaTime);
 
             // Update the object's position and velocity
-            LocalPosition = CartesianVector.Instantiate(positionX, positionY);
-            Velocity = CartesianVector.Instantiate(velocityX, velocityY);
+            LocalPosition = position;
+            Velocity = velocity;
+            Acceleration = acceleration;
         }
 
-        public double CalculateTorque(double forceMagnitude, double leverArmDistance, double angularAcceleration)
-        {
-            return Torque.Value + (leverArmDistance * forceMagnitude * angularAcceleration);
-        }
-
-        public double CalculateLeverArmDistance(Point initialPoint)
-        {
-            Point finalPoint = AnalyticGeometry.CalculateFinalPoint(LocalPosition, initialPoint);
-
-            double perpendicularX = LocalPosition.XValue - finalPoint.x;
-            double perpendicularY = LocalPosition.YValue - finalPoint.y;
-
-            CartesianVector perpendicularVector = CartesianVector.Instantiate(perpendicularX, perpendicularY);
-
-            double leverArmDistance = perpendicularVector.GetMagnitude();
-
-            return leverArmDistance;
-        }
-
-        public void AddRotationForce(IForce force, Point initialPoint) {
+        public void AddRotationForce(IForce force, Point initialPoint, double deltaTime) {
 
             // Force Componenets & Magnitude
             double magnitude = force.GetMagnitude();
@@ -98,70 +71,50 @@ namespace Physics
             // Calculate Angle
             double theta = Atan2(forceY, forceX);
 
-            // Calculate target angular velocity
-            double deltaSeconds = App.mainloop.deltaTime;
-            double targetAngularVelocity = theta / deltaSeconds;
-
-            // Calculate angular displacement
-            double angularDisplacement = targetAngularVelocity - AngularVelocity.Value;
-
             // Calculate angular acceleration
-            double angularAcceleration = angularDisplacement / deltaSeconds;
+            double angularAcceleration = CalculateAngularAcceleration(theta, deltaTime);
 
             // Determine distance
             double leverArmDistance = CalculateLeverArmDistance(initialPoint);
 
-            // Update torque
+            // Calculate torque
             double torque = CalculateTorque(magnitude, leverArmDistance, angularAcceleration);
 
             // Calculate angular velocity
-            AngularVelocity.Value += angularAcceleration * deltaSeconds;
+            AngularVelocity.Value += angularAcceleration * deltaTime;
 
-            // Update rotation
-            double rotationRadians = LocalRotation.Radians + (AngularVelocity.Value * deltaSeconds);
-            double rotationDegrees = LocalRotation.Degrees + Trigonometric.ConvertToDegrees(AngularVelocity.Value * deltaSeconds);
+            // Calculate rotation
+            Angle rotation = CalculateRotation(AngularVelocity.Value, deltaTime);
 
             // Update the object's rotation and torque
-            LocalRotation.Radians = rotationRadians;
-            LocalRotation.Degrees = rotationDegrees;
+            LocalRotation = rotation;
             Torque.Value = torque;
         }
 
-        public void AddRotationForce(AbsoluteForce absoluteForce, double angle, Point initialPoint)
+        public void AddRotationForce(AbsoluteForce absoluteForce, double angle, Point initialPoint, double deltaTime)
         {
-            angle = Abs(angle);
             double radians = Trigonometric.ConvertToRadians(angle);
-            double degrees = angle;
 
             // Force magnitude
             double magnitude = absoluteForce.Value;
-
-            // Calculate target angular velocity
-            double deltaSeconds = App.mainloop.deltaTime;
-            double targetAngularVelocity = radians / deltaSeconds;
-
-            // Calculate angular displacement
-            double angularDisplacement = targetAngularVelocity - AngularVelocity.Value;
             
             // Calculate angular acceleration
-            double angularAcceleration = angularDisplacement / deltaSeconds;
+            double angularAcceleration = CalculateAngularAcceleration(radians, deltaTime);
 
             // Determine distance
             double leverArmDistance = CalculateLeverArmDistance(initialPoint);
 
-            // Update torque
+            // Calculate torque
             double torque = CalculateTorque(magnitude, leverArmDistance, angularAcceleration);
 
             // Calculate angular velocity
-            AngularVelocity.Value += angularAcceleration * deltaSeconds;
+            AngularVelocity.Value += angularAcceleration * deltaTime;
 
-            // Update rotation
-            double rotationRadians = LocalRotation.Radians + (AngularVelocity.Value * deltaSeconds);
-            double rotationDegrees = LocalRotation.Degrees + Trigonometric.ConvertToDegrees(AngularVelocity.Value * deltaSeconds);
+            // Calculate rotation
+            Angle rotation = CalculateRotation(AngularVelocity.Value, deltaTime);
 
             // Update the object's rotation and torque
-            LocalRotation.Radians = rotationRadians;
-            LocalRotation.Degrees = rotationDegrees;
+            LocalRotation = rotation;
             Torque.Value = torque;
         }
     }

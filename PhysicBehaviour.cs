@@ -11,6 +11,7 @@
         
         while (true)
         {
+            main.Update();
             Update(main);
         }
     }

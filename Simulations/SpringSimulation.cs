@@ -8,9 +8,9 @@ public class SpringSimulation : PhysicBehaviour
 
     public override void Update(Cycle main)
     {
-        main.Update();
         spring.AddPerpendicularForce(force, main.deltaTime);
         if(spring.Length.Value != spring.ExtensionLimit.Value)
-            WriteLine(ID.ToString() + ": " + Math.Round(spring.Length.Value, 3).ToString() + "m");
+            //WriteLine(ID + ": " + Math.Round(spring.Length.Value, 3).ToString() + "m");
+            WriteLine(main.deltaTime.ToString());
     }
 }

@@ -17,7 +17,17 @@ class App
         simulation.Tag = "PhySPR";
         simulation.spring = Spring.Instantiate(5, 2.75f, 24f);
         simulation.force = AbsoluteForce.Instantiate(3.20f);
-        simulation.Start(mainloop);
         // ~ Spring simulation ~ //
+
+        // ~ Object force simulation ~ //
+        ObjectForceSimulation simulation1 = new ObjectForceSimulation();
+        simulation1.Tag = "PhyObj";
+        Physics.Object solid = new Physics.Object();
+        solid.Mass.Value = 0.001f;
+        simulation1.Solid2D = solid;
+        simulation1.cartesianForce = CartesianForce.Instantiate(Exp(-200), Exp(-200));
+        simulation1.Start(mainloop);
+        // ~ Object force simulation ~ //
+
     }
 }
