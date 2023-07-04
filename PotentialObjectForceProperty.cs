@@ -67,10 +67,10 @@ namespace Physics
             double forceY = force.YValue;
 
             // Calculate acceleration
-            CartesianVector acceleration = CalculateAcceleration(forceX, forceY);
+            CartesianVector acceleration = CalculateExponentialAcceleration(forceX, forceY, deltaTime);
 
             // Calculate velocity
-            CartesianVector velocity = CalculateVelocity(deltaTime);
+            CartesianVector velocity = CalculateExponentialVelocity(deltaTime);
 
             // Calculate position
             CartesianVector position = CalculatePosition(deltaTime);

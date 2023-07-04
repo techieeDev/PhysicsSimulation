@@ -16,10 +16,7 @@ namespace Physics
                 {
                     ApplyExponentialTranslationForce(ref appliedForces[i], deltaTime);
                 }
-
-                Velocity = CalculateExponentialVelocity(deltaTime);
-
-                LocalPosition.DisplayComponenets();
+                Acceleration.DisplayComponenets();
             }
 
         }
