@@ -9,12 +9,7 @@ namespace Physics
 
         protected ArrayList AppliedForces = new ArrayList();
 
-        protected void UpdateNetForce(double forceX, double forceY)
-        {
-            double netForceX = forceX + NetForce.XValue;
-            double netForceY = forceY + NetForce.YValue;
-            NetForce = CartesianForce.Instantiate(netForceX, netForceY);
-        }
+
 
         public new void AddTranslationForce(IForce force)
         {
@@ -90,10 +85,10 @@ namespace Physics
             double netForceY = forceContractY - forceY;
             UpdateNetForce(netForceX, netForceY);
 
-            // Update the object's acceleration, velocity, position
-            LocalPosition = position;
+            // Update object's position & acceleration & velocity
             Acceleration = acceleration;
             Velocity = velocity;
+            LocalPosition = position;
         }
     }
 }

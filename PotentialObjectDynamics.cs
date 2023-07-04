@@ -1,4 +1,6 @@
-﻿namespace Physics
+﻿using static System.Console;
+
+namespace Physics
 {
     public partial class PotentialObject
     {
@@ -9,12 +11,15 @@
             {
                 CartesianForce[] appliedForces = GetAppliedForces();
                 updateCycle.Update();
+                double deltaTime = updateCycle.deltaTime;
                 for(int i = 0; i<appliedForces.Length; i++)
                 {
-                    ApplyExponentialTranslationForce(ref appliedForces[i], updateCycle.deltaTime);
+                    ApplyExponentialTranslationForce(ref appliedForces[i], deltaTime);
                 }
-                Console.WriteLine(appliedForces[0].GetMagnitude());
 
+                Velocity = CalculateExponentialVelocity(deltaTime);
+
+                LocalPosition.DisplayComponenets();
             }
 
         }
