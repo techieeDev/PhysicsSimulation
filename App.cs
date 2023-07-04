@@ -26,8 +26,14 @@ class App
         solid.Mass.Value = 0.001f;
         simulation1.Solid2D = solid;
         simulation1.cartesianForce = CartesianForce.Instantiate(Exp(-200), Exp(-200));
-        simulation1.Start(mainloop);
         // ~ Object force simulation ~ //
+
+        // ~ Potential object ~ //
+        PotentialObject p = new PotentialObject();
+        CartesianForce F = CartesianForce.Instantiate(6, 6.25f);
+        p.Mass.Value = 2.5f;
+        p.AddTranslationForce(F);
+        p.StartDynamic(mainloop);
 
     }
 }

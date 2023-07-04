@@ -9,6 +9,7 @@ public static class Algebra
             return "-";
         
         else 
+
             return "";
         
     }

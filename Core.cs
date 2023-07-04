@@ -10,6 +10,9 @@ namespace Physics
         public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
     }
 
+    public partial class PotentialObject : Object{
+    }
+
     public partial class Spring
     {
         public Characteristic Length = Characteristic.Instantiate(1);

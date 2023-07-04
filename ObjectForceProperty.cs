@@ -5,7 +5,7 @@ namespace Physics
 {
     public partial class Object
     {
-        public void AddTranslationForce(IForce force, double deltaTime){
+        public virtual void AddTranslationForce(IForce force, double deltaTime){
             double[] components = force.GetComponents();
              
             // Calculate acceleration
@@ -23,7 +23,7 @@ namespace Physics
             Acceleration = acceleration;
         }
 
-        public void AddTranslationForce(AbsoluteForce absoluteForce, Angle angle, double deltaTime){
+        public virtual void AddTranslationForce(AbsoluteForce absoluteForce, Angle angle, double deltaTime){
             double radians = angle.Radians;
             
             // Force components
@@ -60,7 +60,7 @@ namespace Physics
             Acceleration = acceleration;
         }
 
-        public void AddRotationForce(IForce force, Point initialPoint, double deltaTime) {
+        public virtual void AddRotationForce(IForce force, Point initialPoint, double deltaTime) {
 
             // Force Componenets & Magnitude
             double magnitude = force.GetMagnitude();
@@ -91,7 +91,7 @@ namespace Physics
             Torque.Value = torque;
         }
 
-        public void AddRotationForce(AbsoluteForce absoluteForce, double angle, Point initialPoint, double deltaTime)
+        public virtual void AddRotationForce(AbsoluteForce absoluteForce, double angle, Point initialPoint, double deltaTime)
         {
             double radians = Trigonometric.ConvertToRadians(angle);
 
