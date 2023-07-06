@@ -11,7 +11,6 @@ namespace Physics
     }
 
     public partial class PotentialObject : Object{
-        public Characteristic InstantResistance = Characteristic.Instantiate(1f);
     }
 
     public partial class Spring

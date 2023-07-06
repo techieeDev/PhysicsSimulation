@@ -9,8 +9,6 @@ namespace Physics
 
         protected ArrayList AppliedForces = new ArrayList();
 
-
-
         public new void AddTranslationForce(IForce force)
         {
             // Force components
@@ -19,9 +17,6 @@ namespace Physics
             // Assign to applied forces
             CartesianForce cartesianForce = CartesianForce.Instantiate(forceComponents[0], forceComponents[1]);
             AppliedForces.Add(cartesianForce);
-
-            // Calculate net force
-            UpdateNetForce(forceComponents[0], forceComponents[1]);
         }
 
         public override void AddTranslationForce(AbsoluteForce absoluteForce, Angle angle, double deltaTime)
@@ -53,9 +48,6 @@ namespace Physics
             // Assign to applied forces
             CartesianForce cartesianForce = CartesianForce.Instantiate(forceX, forceY);
             AppliedForces.Add(cartesianForce);
-
-            // Calculate net force
-            UpdateNetForce(forceX, forceY);
         }
 
 

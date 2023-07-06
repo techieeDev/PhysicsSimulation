@@ -4,9 +4,6 @@ namespace Physics
 {
     public partial class PotentialObject
     {
-        // a1 = a0 + (F/m)
-        // a2 = a1/dt = (a0 + (F/m)) / dt = a0/dt + F/m/dt = a0.m/(dt.m) + F/(m.dt) = (a0.m + F)/m.dt
-
         protected CartesianForce CalculateContractForce(CartesianForce force, double dt)
         {
             double forceContractX = force.XValue / dt;
@@ -28,8 +25,8 @@ namespace Physics
 
 
         protected void UpdateVelocity(double dt) {
-            double velocityX = Acceleration.XValue * dt;
-            double velocityY = Acceleration.YValue * dt;
+            double velocityX = Acceleration.XValue / dt;
+            double velocityY = Acceleration.YValue / dt;
             velocityX += (Acceleration.XValue * dt);
             velocityY += (Acceleration.YValue * dt);
 
@@ -43,12 +40,5 @@ namespace Physics
             LocalPosition = CartesianVector.Instantiate(positionX, positionY);
         }
 
-
-        protected void UpdateNetForce(double forceX, double forceY)
-        {
-            double netForceX = forceX + NetForce.XValue;
-            double netForceY = forceY + NetForce.YValue;
-            NetForce = CartesianForce.Instantiate(netForceX, netForceY);
-        }
     }
 }
