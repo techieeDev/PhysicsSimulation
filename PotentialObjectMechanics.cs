@@ -7,32 +7,40 @@ namespace Physics
         // a1 = a0 + (F/m)
         // a2 = a1/dt = (a0 + (F/m)) / dt = a0/dt + F/m/dt = a0.m/(dt.m) + F/(m.dt) = (a0.m + F)/m.dt
 
-        protected CartesianForce CalculateContractForce(CartesianForce force, double deltaTime)
+        protected CartesianForce CalculateContractForce(CartesianForce force, double dt)
         {
-            double forceContractX = 1 / (deltaTime * force.XValue * InstantResistance.Value);
-            double clampedX = Clamp(forceContractX, double.MinValue, force.XValue);
-            double forceContractY = 1 / (deltaTime * force.YValue * InstantResistance.Value);
-            double clampedY = Clamp(forceContractY, double.MinValue, force.YValue);
+            double forceContractX = force.XValue / dt;
+            double clampedX = Clamp(forceContractX, 0, force.XValue);
+            double forceContractY = force.YValue / dt;
+            double clampedY = Clamp(forceContractY, 0, force.YValue);
             return CartesianForce.Instantiate(clampedX, clampedY);
         }
 
 
         protected void UpdateAcceleration(double forceX, double forceY, double dt) {
-            double accelerationX = Acceleration.XValue + (forceX / Mass.Value);
-            double accelerationY = Acceleration.YValue + (forceY / Mass.Value);
+            double accelerationX = Acceleration.XValue / Mass.Value;
+            double accelerationY = Acceleration.YValue / Mass.Value;
+            accelerationX += (forceX / Mass.Value);
+            accelerationY += (forceY / Mass.Value);
+ 
             Acceleration = CartesianVector.Instantiate(accelerationX, accelerationY);
         }
 
 
         protected void UpdateVelocity(double dt) {
-            double velocityX = Velocity.XValue + (Acceleration.XValue * dt);
-            double velocityY = Velocity.YValue + (Acceleration.YValue * dt);
+            double velocityX = Acceleration.XValue * dt;
+            double velocityY = Acceleration.YValue * dt;
+            velocityX += (Acceleration.XValue * dt);
+            velocityY += (Acceleration.YValue * dt);
+
             Velocity = CartesianVector.Instantiate(velocityX, velocityY);
         }
 
-        protected void UpdatePosition(double deltaTime){
+        protected void UpdatePosition(double dt){
 
-            LocalPosition.UpdateVector(Velocity.XValue * deltaTime * 0.5f, Velocity.YValue * deltaTime * 0.5f);
+            double positionX = (Velocity.XValue * Pow(dt, 2) * 0.5f) + LocalPosition.XValue;
+            double positionY = (Velocity.YValue * Pow(dt, 2) * 0.5f) + LocalPosition.YValue;
+            LocalPosition = CartesianVector.Instantiate(positionX, positionY);
         }
 
 

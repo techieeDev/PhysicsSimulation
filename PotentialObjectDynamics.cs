@@ -18,7 +18,7 @@ namespace Physics
                     ApplyExponentialTranslationForce(ref force, deltaTime);
                     UpdateAppliedForce(i, force);
                 }
-                Acceleration.DisplayComponenets();
+                LocalPosition.DisplayComponenets();
                 
             }
 

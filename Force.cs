@@ -12,7 +12,6 @@
 
             force.XValue = x;
             force.YValue = y;
-
             return force;
         }
     }

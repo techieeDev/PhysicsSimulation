@@ -30,9 +30,9 @@ class App
 
         // ~ Potential object ~ //
         PotentialObject p = new PotentialObject();
-        CartesianForce F = CartesianForce.Instantiate(1, 2);
+        CartesianForce F = CartesianForce.Instantiate(10, 0);
         CartesianForce GravityForce = CartesianForce.Instantiate(0, -9.8f);
-        p.Mass.Value = 2;
+        p.Mass.Value = 100;
         //p.AddTranslationForce(F);
         p.AddTranslationForce(F);
         p.StartDynamic(mainloop);
