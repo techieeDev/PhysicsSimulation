@@ -14,9 +14,12 @@ namespace Physics
                 double deltaTime = updateCycle.deltaTime;
                 for(int i = 0; i<appliedForces.Length; i++)
                 {
-                    ApplyExponentialTranslationForce(ref appliedForces[i], deltaTime);
+                    CartesianForce force = CartesianForce.Instantiate(appliedForces[i].XValue, appliedForces[i].YValue);
+                    ApplyExponentialTranslationForce(ref force, deltaTime);
+                    UpdateAppliedForce(i, force);
                 }
                 Acceleration.DisplayComponenets();
+                
             }
 
         }
@@ -31,6 +34,11 @@ namespace Physics
             }
 
             return cartesianForces;
+        }
+
+        protected void UpdateAppliedForce(int forceIndex, CartesianForce force)
+        {
+            AppliedForces[forceIndex] = force;
         }
     }
 }

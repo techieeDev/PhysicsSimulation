@@ -67,28 +67,16 @@ namespace Physics
             double forceY = force.YValue;
 
             // Calculate acceleration
-            CartesianVector acceleration = CalculateExponentialAcceleration(forceX, forceY, deltaTime);
+            UpdateAcceleration(forceX, forceY, deltaTime);
 
-            // Calculate velocity
-            CartesianVector velocity = CalculateExponentialVelocity(deltaTime);
+            // Update velocity
+            UpdateVelocity(deltaTime);
 
             // Calculate position
-            CartesianVector position = CalculatePosition(deltaTime);
+            UpdatePosition(deltaTime);
 
             // Calculate force contract
-            double forceContractX = forceX / deltaTime;
-            double forceContractY = forceY / deltaTime;
-            force = CartesianForce.Instantiate(forceContractX, forceContractY);
-
-            // Calculate net force
-            double netForceX = forceContractX - forceX;
-            double netForceY = forceContractY - forceY;
-            UpdateNetForce(netForceX, netForceY);
-
-            // Update object's position & acceleration & velocity
-            Acceleration = acceleration;
-            Velocity = velocity;
-            LocalPosition = position;
+            force = CalculateContractForce(force, deltaTime);
         }
     }
 }

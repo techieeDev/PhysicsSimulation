@@ -4,13 +4,14 @@ namespace Physics
 {
     public partial class Object{
         public Mass Mass = new Mass();
-        public CartesianVector Velocity = CartesianVector.Instantiate(0.1f, 0.1f);
-        public CartesianVector Acceleration = CartesianVector.Instantiate(0.1f, 0.1f);
+        public CartesianVector Velocity = CartesianVector.Instantiate(0f, 0f);
+        public CartesianVector Acceleration = CartesianVector.Instantiate(0f, 0f);
         public Characteristic Torque = Characteristic.Instantiate(0.1f);
         public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
     }
 
     public partial class PotentialObject : Object{
+        public Characteristic InstantResistance = Characteristic.Instantiate(1f);
     }
 
     public partial class Spring
@@ -135,6 +136,12 @@ namespace Physics
             return vector;
         }
 
+        public virtual void UpdateVector(double xUpdate, double yUpdate)
+        {
+            XValue += xUpdate;
+            YValue += yUpdate;
+        }
+
         public virtual void SetXValue(double x) { 
             XValue = x;
         }
@@ -149,6 +156,8 @@ namespace Physics
             double magnitude = Math.Sqrt(Math.Pow(XValue, 2) + Math.Pow(YValue, 2));
             return magnitude;
         }
+
+
 
         public virtual void DisplayComponenets(){
             WriteLine("X: " + XValue.ToString() + " Y: " + YValue.ToString()); 
