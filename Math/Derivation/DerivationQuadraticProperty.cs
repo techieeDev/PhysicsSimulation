@@ -8,7 +8,6 @@
             DifferentiableBasic dxp2 = DifferentiableBasic.Instantiate(dq.xpow2coefficient, 2);
             DifferentiableBasic dxp1 = DifferentiableBasic.Instantiate(dq.xpow1coefficient, 1);
 
-            DifferentiableQuadratic df = DifferentiableQuadratic.Instantiate(dxp2.coefficient, dxp1.coefficient, 0);
             return DifferentiableQuadratic.Instantiate(dxp2.coefficient, dxp1.coefficient, 0);
         }
 

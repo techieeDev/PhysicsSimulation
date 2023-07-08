@@ -1,8 +1,8 @@
 ﻿namespace Calculus
 {
-    public partial class Derivation
+    public partial class IndefiniteIntegration
     {
-        public abstract class Differentiable
+        public abstract class Integrable
         {
             public abstract void DisplayForm();
         }
