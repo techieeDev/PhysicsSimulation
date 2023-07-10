@@ -176,6 +176,13 @@ namespace Physics
         public virtual void DisplayComponenets(){
             WriteLine("X: " + XValue.ToString() + " Y: " + YValue.ToString()); 
         }
+
+        public virtual void DisplayRoundedComponents()
+        {
+            string roundX = (Round(XValue, 4)).ToString();
+            string roundY = (Round(YValue, 4)).ToString();
+            WriteLine("X: " + roundX + " Y: " + roundY);
+        }
     }
 
     public class GravitationalForce : Characteristic {}

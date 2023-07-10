@@ -8,7 +8,6 @@ namespace Physics
         public CartesianForce NetForce = CartesianForce.Instantiate(0f, 0f);
 
         protected ArrayList AppliedForces = new ArrayList();
-
         public new void AddTranslationForce(IForce force)
         {
             // Force components

@@ -16,14 +16,16 @@ namespace Physics
 
 
         protected void UpdateAcceleration(double forceX, double forceY, double dt) {
-            double accelerationX = (forceX + Acceleration.XValue) / Mass.Value;
-            double accelerationY = (forceY + Acceleration.YValue) / Mass.Value;
+            double accelerationX = (Acceleration.XValue + forceX) / (Mass.Value * dt);
+            double accelerationY = (Acceleration.YValue + forceY) / (Mass.Value * dt);
             Acceleration = CartesianVector.Instantiate(accelerationX, accelerationY);
         }
 
         protected void UpdateVelocity(double dt) {
             CartesianVector integrateAcceleration = CartesianVector.IntegrateVector(Acceleration, dt, 1);
-            Velocity = CartesianVector.Instantiate(integrateAcceleration.XValue, integrateAcceleration.YValue);
+            double velocityX = Acceleration.XValue * 0.5f * Pow(dt, 2);
+            double velocityY = Acceleration.YValue * 0.5f * Pow(dt, 2);
+            Velocity = CartesianVector.Instantiate(velocityX, velocityY) ;
         }
 
         protected void UpdatePosition(double dt){
