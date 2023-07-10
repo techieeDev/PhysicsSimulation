@@ -1,7 +1,7 @@
 ﻿namespace Calculus
 {
     using static System.Math;
-    public static partial class Derivation
+    public partial class Derivation
     {
         public static DifferentiableQuadratic Differentiate(DifferentiableQuadratic dq)
         {
