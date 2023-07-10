@@ -1,7 +1,10 @@
-﻿using static System.Console;
+﻿using Calculus;
+using static System.Console;
+using static System.Math;
 
 namespace Physics
 {
+
     public partial class Object{
         public Mass Mass = new Mass();
         public CartesianVector Velocity = CartesianVector.Instantiate(0f, 0f);
@@ -124,7 +127,7 @@ namespace Physics
 
     public class CartesianVector {
         public double XValue;
-        public double YValue;        
+        public double YValue;
 
         public static CartesianVector Instantiate(double x, double y){
             CartesianVector vector = new CartesianVector();
@@ -139,6 +142,18 @@ namespace Physics
         {
             XValue += xUpdate;
             YValue += yUpdate;
+        }
+
+        public static CartesianVector IntegrateVector(CartesianVector integrableVector, double variable, double variable_exponent)
+        {
+            IndefiniteIntegration.IntegrableBasic integrableX = IndefiniteIntegration.IntegrableBasic.Instantiate(integrableVector.XValue, variable_exponent);
+            IndefiniteIntegration.IntegrableBasic integrableY = IndefiniteIntegration.IntegrableBasic.Instantiate(integrableVector.YValue, variable_exponent);
+
+            IndefiniteIntegration.IntegrableBasic integrateX = IndefiniteIntegration.Integrate(integrableX);
+            IndefiniteIntegration.IntegrableBasic integrateY = IndefiniteIntegration.Integrate(integrableY);
+
+            return Instantiate(integrateX.coefficient * Pow(variable, integrateX.variable_exponent), integrateY.coefficient * Pow(variable, integrateY.variable_exponent));
+
         }
 
         public virtual void SetXValue(double x) { 
