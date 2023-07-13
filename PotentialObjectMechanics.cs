@@ -23,9 +23,7 @@ namespace Physics
 
         protected void UpdateVelocity(double dt) {
             CartesianVector integrateAcceleration = CartesianVector.IntegrateVector(Acceleration, dt, 1);
-            double velocityX = Acceleration.XValue * 0.5f * Pow(dt, 2);
-            double velocityY = Acceleration.YValue * 0.5f * Pow(dt, 2);
-            Velocity = CartesianVector.Instantiate(velocityX, velocityY) ;
+            Velocity = CartesianVector.Instantiate(integrateAcceleration.XValue, integrateAcceleration.YValue) ;
         }
 
         protected void UpdatePosition(double dt){

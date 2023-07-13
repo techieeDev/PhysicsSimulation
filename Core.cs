@@ -4,12 +4,7 @@ using static System.Math;
 
 namespace Physics
 {
-    public partial class Object{
-        public Mass Mass = new Mass();
-        public CartesianVector Velocity = CartesianVector.Instantiate(0f, 0f);
-        public CartesianVector Acceleration = CartesianVector.Instantiate(0f, 0f);
-        public Characteristic Torque = Characteristic.Instantiate(0.1f);
-        public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
+    public partial class Object : PhysicBody{
     }
 
     public partial class PotentialObject : PhysicBody{
