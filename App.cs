@@ -35,7 +35,7 @@ class App
         CartesianForce GravityForce = CartesianForce.Instantiate(0, -9.8f);
         p.Mass.Value = 100;
         //p.AddTranslationForce(F);
-        p.AddTranslationForce(F);
+        p.AssignTranslationForce(F);
         //p.StartDynamic(mainloop);
 
         // ~ Integrate ~ //
