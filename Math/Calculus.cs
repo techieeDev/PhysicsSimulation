@@ -3,7 +3,7 @@ using static System.Math;
 
 namespace Calculus
 {
-    public static partial class Derivation
+    public partial class Derivation
     {
         public static DifferentiableBasic Differentiate(DifferentiableBasic df)
         {
@@ -33,7 +33,7 @@ namespace Calculus
         }
     }
 
-    public static partial class IndefiniteIntegration
+    public partial class IndefiniteIntegration
     {
         public static IntegrableBasic Integrate(IntegrableBasic Idf) {
             double new_coefficient = Idf.coefficient / (Idf.variable_exponent + 1);
@@ -58,6 +58,8 @@ namespace Calculus
                 Console.WriteLine(coefficient.ToString() + "x^" + variable_exponent.ToString());
             }
         }
+
+
     }
 
 }

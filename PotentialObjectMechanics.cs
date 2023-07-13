@@ -1,4 +1,5 @@
-﻿using static System.Math;
+﻿using Calculus;
+using static System.Math;
 
 namespace Physics
 {
@@ -15,29 +16,21 @@ namespace Physics
 
 
         protected void UpdateAcceleration(double forceX, double forceY, double dt) {
-            double accelerationX = Acceleration.XValue / Mass.Value;
-            double accelerationY = Acceleration.YValue / Mass.Value;
-            accelerationX += (forceX / Mass.Value);
-            accelerationY += (forceY / Mass.Value);
- 
+            double accelerationX = (Acceleration.XValue + forceX) / (Mass.Value * dt);
+            double accelerationY = (Acceleration.YValue + forceY) / (Mass.Value * dt);
             Acceleration = CartesianVector.Instantiate(accelerationX, accelerationY);
         }
 
-
         protected void UpdateVelocity(double dt) {
-            double velocityX = Acceleration.XValue / dt;
-            double velocityY = Acceleration.YValue / dt;
-            velocityX += (Acceleration.XValue * dt);
-            velocityY += (Acceleration.YValue * dt);
-
-            Velocity = CartesianVector.Instantiate(velocityX, velocityY);
+            CartesianVector integrateAcceleration = CartesianVector.IntegrateVector(Acceleration, dt, 1);
+            double velocityX = Acceleration.XValue * 0.5f * Pow(dt, 2);
+            double velocityY = Acceleration.YValue * 0.5f * Pow(dt, 2);
+            Velocity = CartesianVector.Instantiate(velocityX, velocityY) ;
         }
 
         protected void UpdatePosition(double dt){
-
-            double positionX = (Velocity.XValue * Pow(dt, 2) * 0.5f) + LocalPosition.XValue;
-            double positionY = (Velocity.YValue * Pow(dt, 2) * 0.5f) + LocalPosition.YValue;
-            LocalPosition = CartesianVector.Instantiate(positionX, positionY);
+            CartesianVector integrateVelocity = CartesianVector.IntegrateVector(Velocity, dt, 1);
+            LocalPosition = CartesianVector.Instantiate(LocalPosition.XValue + integrateVelocity.XValue, LocalPosition.YValue + integrateVelocity.YValue);
         }
 
     }

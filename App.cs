@@ -35,13 +35,13 @@ class App
         CartesianForce GravityForce = CartesianForce.Instantiate(0, -9.8f);
         p.Mass.Value = 100;
         //p.AddTranslationForce(F);
-        p.AssignTranslationForce(F);
+        p.AddTranslationForce(F);
         //p.StartDynamic(mainloop);
 
         // ~ Integrate ~ //
         IntegrableQuadratic q = IntegrableQuadratic.Instantiate(2, 3, 1);
         IntegrableQuadratic Q = Integrate(q);
-        WriteLine(Q.xpow2coefficient);
+        //WriteLine(Q.xpow2coefficient);
 
     }
 }

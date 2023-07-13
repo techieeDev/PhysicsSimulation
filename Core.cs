@@ -1,8 +1,15 @@
-﻿using static System.Console;
+﻿using Calculus;
+using static System.Console;
+using static System.Math;
 
 namespace Physics
 {
-    public partial class Object : PhysicBody{
+    public partial class Object{
+        public Mass Mass = new Mass();
+        public CartesianVector Velocity = CartesianVector.Instantiate(0f, 0f);
+        public CartesianVector Acceleration = CartesianVector.Instantiate(0f, 0f);
+        public Characteristic Torque = Characteristic.Instantiate(0.1f);
+        public Characteristic AngularVelocity = Characteristic.Instantiate(0.1f);
     }
 
     public partial class PotentialObject : PhysicBody{
@@ -119,7 +126,7 @@ namespace Physics
 
     public class CartesianVector {
         public double XValue;
-        public double YValue;        
+        public double YValue;
 
         public static CartesianVector Instantiate(double x, double y){
             CartesianVector vector = new CartesianVector();
@@ -134,6 +141,18 @@ namespace Physics
         {
             XValue += xUpdate;
             YValue += yUpdate;
+        }
+
+        public static CartesianVector IntegrateVector(CartesianVector integrableVector, double variable, double variable_exponent)
+        {
+            IndefiniteIntegration.IntegrableBasic integrableX = IndefiniteIntegration.IntegrableBasic.Instantiate(integrableVector.XValue, variable_exponent);
+            IndefiniteIntegration.IntegrableBasic integrableY = IndefiniteIntegration.IntegrableBasic.Instantiate(integrableVector.YValue, variable_exponent);
+
+            IndefiniteIntegration.IntegrableBasic integrateX = IndefiniteIntegration.Integrate(integrableX);
+            IndefiniteIntegration.IntegrableBasic integrateY = IndefiniteIntegration.Integrate(integrableY);
+
+            return Instantiate(integrateX.coefficient * Pow(variable, integrateX.variable_exponent), integrateY.coefficient * Pow(variable, integrateY.variable_exponent));
+
         }
 
         public virtual void SetXValue(double x) { 
@@ -155,6 +174,13 @@ namespace Physics
 
         public virtual void DisplayComponenets(){
             WriteLine("X: " + XValue.ToString() + " Y: " + YValue.ToString()); 
+        }
+
+        public virtual void DisplayRoundedComponents()
+        {
+            string roundX = (Round(XValue, 4)).ToString();
+            string roundY = (Round(YValue, 4)).ToString();
+            WriteLine("X: " + roundX + " Y: " + roundY);
         }
     }
 
